@@ -1,6 +1,5 @@
 #
 # Build stage
-#
 FROM openjdk:17 AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
