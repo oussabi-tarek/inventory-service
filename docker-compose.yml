@@ -1,25 +1,34 @@
-version: "3.7"
+version: "3"
 services:
-  api_service:
+  springboot-app:
+    # container_name: spring-app
+    image: springbooot-app
     build: .
-    restart: always
+    restart: on-failure
     ports:
       - 8080:8080
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/basics?allowPublicKeyRetrieval=true
+      spring.datasource.url: jdbc:mysql://mysqldb:3306/inventory_service?allowPublicKeyRetrieval=true&useSSL=false
+      spring.datasource.username: root
+      spring.datasource.password: root
+      spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+      spring.jpa.hibernate.ddl-auto: update
+      MYSQL_HOST: mysqldb
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     depends_on:
       - mysqldb
 
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
     volumes:
       - .m2:/root/.m2
-
-  mysqldb:
-    image: "mysql:8.0"
-    restart: always
     ports:
       - 3306:3306
     environment:
-      MYSQL_DATABASE: basics
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: inventory_service
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+
