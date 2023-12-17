@@ -15,9 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class InventoryController {
-
     private final InventoryService inventoryService;
-
     @GetMapping
     public ResponseEntity<List<InventoryRepresentation>> isInStock(@RequestParam List<String> skuCode){
         log.info("InventoryController is called {}", skuCode);
@@ -28,5 +26,4 @@ public class InventoryController {
         log.info("InventoryController is called {}", inventoryCommand);
         return ResponseEntity.ok(inventoryService.addInventory(inventoryCommand));
     }
-
 }
